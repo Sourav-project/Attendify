@@ -1,0 +1,2 @@
+# Attendify
+Student attendance System
