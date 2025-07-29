@@ -110,6 +110,9 @@ importers:
       embla-carousel-react:
         specifier: 8.5.1
         version: 8.5.1(react@19.0.0)
+      geist:
+        specifier: ^1.3.1
+        version: 1.3.1(next@15.2.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       input-otp:
         specifier: 1.4.1
         version: 1.4.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -127,7 +130,7 @@ importers:
         version: 19.0.0
       react-day-picker:
         specifier: latest
-        version: 9.7.0(react@19.0.0)
+        version: 9.8.1(react@19.0.0)
       react-dom:
         specifier: ^19
         version: 19.0.0(react@19.0.0)
@@ -139,7 +142,7 @@ importers:
         version: 2.1.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       recharts:
         specifier: latest
-        version: 3.0.2(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react-is@19.1.0)(react@19.0.0)(redux@5.0.1)
+        version: 3.1.0(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react-is@19.1.0)(react@19.0.0)(redux@5.0.1)
       sonner:
         specifier: ^1.7.1
         version: 1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1576,6 +1579,11 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
+  geist@1.3.1:
+    resolution: {integrity: sha512-Q4gC1pBVPN+D579pBaz0TRRnGA4p9UK6elDY/xizXdFk/g4EKR5g0I+4p/Kj6gM0SajDBZ/0FvDV9ey9ud7BWw==}
+    peerDependencies:
+      next: '>=13.2.0'
+
   get-nonce@1.0.1:
     resolution: {integrity: sha512-FJhYRoDaiatfEkUK8HKlicmu/3SGFD51q3itKDGoSTysQJBnfOcxU5GxnhE1E6soB76MbT0MBtnKJuXyAx+96Q==}
     engines: {node: '>=6'}
@@ -1808,8 +1816,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-day-picker@9.7.0:
-    resolution: {integrity: sha512-urlK4C9XJZVpQ81tmVgd2O7lZ0VQldZeHzNejbwLWZSkzHH498KnArT0EHNfKBOWwKc935iMLGZdxXPRISzUxQ==}
+  react-day-picker@9.8.1:
+    resolution: {integrity: sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=16.8.0'
@@ -1887,8 +1895,8 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
-  recharts@3.0.2:
-    resolution: {integrity: sha512-eDc3ile9qJU9Dp/EekSthQPhAVPG48/uM47jk+PF7VBQngxeW3cwQpPHb/GHC1uqwyCRWXcIrDzuHRVrnRryoQ==}
+  recharts@3.1.0:
+    resolution: {integrity: sha512-NqAqQcGBmLrfDs2mHX/bz8jJCQtG2FeXfE0GqpZmIuXIjkpIwj8sd9ad0WyvKiBKPd8ZgNG0hL85c8sFDwascw==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -3455,6 +3463,10 @@ snapshots:
 
   function-bind@1.1.2: {}
 
+  geist@1.3.1(next@15.2.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)):
+    dependencies:
+      next: 15.2.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+
   get-nonce@1.0.1: {}
 
   glob-parent@5.1.2:
@@ -3653,7 +3665,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-day-picker@9.7.0(react@19.0.0):
+  react-day-picker@9.8.1(react@19.0.0):
     dependencies:
       '@date-fns/tz': 1.2.0
       date-fns: 4.1.0
@@ -3722,7 +3734,7 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
-  recharts@3.0.2(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react-is@19.1.0)(react@19.0.0)(redux@5.0.1):
+  recharts@3.1.0(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react-is@19.1.0)(react@19.0.0)(redux@5.0.1):
     dependencies:
       '@reduxjs/toolkit': 2.8.2(react-redux@9.2.0(@types/react@19.0.0)(react@19.0.0)(redux@5.0.1))(react@19.0.0)
       clsx: 2.1.1
