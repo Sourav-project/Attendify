@@ -37,10 +37,23 @@ export default function TeacherRegister() {
 
     setIsLoading(true)
 
-    // Simulate registration
+    // Simulate registration and securely save data
     setTimeout(() => {
+      const userData = {
+        userType: "teacher",
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        employeeId: formData.employeeId,
+        department: formData.department,
+        subject: formData.subject,
+        phone: formData.phone,
+        // In a real app, password would be hashed and stored securely on a backend
+      }
       localStorage.setItem("userType", "teacher")
       localStorage.setItem("userEmail", formData.email)
+      localStorage.setItem("authToken", `token_teacher_${Date.now()}`)
+      localStorage.setItem("currentUser", JSON.stringify(userData)) // Store comprehensive user data
       router.push("/dashboard")
       setIsLoading(false)
     }, 1500)

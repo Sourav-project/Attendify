@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { User, Settings, HelpCircle, LogOut, ChevronDown } from "lucide-react"
+import { useEffect, useState } from "react"
 
 interface UserProfileMenuProps {
   userType: "student" | "teacher" | "admin"
@@ -17,19 +18,49 @@ interface UserProfileMenuProps {
   userName?: string
 }
 
-export default function UserProfileMenu({ userType, userEmail, userName }: UserProfileMenuProps) {
-  const router = useRouter()
+interface StoredUserData {
+  firstName?: string
+  lastName?: string
+  email: string
+  userType: "student" | "teacher" | "admin"
+  avatarUrl?: string
+}
 
-  // Generate user name from email if not provided
-  const displayName = userName || userEmail.split("@")[0].charAt(0).toUpperCase() + userEmail.split("@")[0].slice(1)
+export default function UserProfileMenu({
+  userType: propUserType,
+  userEmail: propUserEmail,
+  userName: propUserName,
+}: UserProfileMenuProps) {
+  const router = useRouter()
+  const [currentUserData, setCurrentUserData] = useState<StoredUserData | null>(null)
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("currentUser")
+    if (storedUser) {
+      setCurrentUserData(JSON.parse(storedUser))
+    } else {
+      // Fallback if currentUser is not set (e.g., old login session)
+      setCurrentUserData({
+        email: propUserEmail,
+        userType: propUserType,
+        firstName: propUserName?.split(" ")[0] || "",
+        lastName: propUserName?.split(" ")[1] || "",
+      })
+    }
+  }, [propUserEmail, propUserType, propUserName])
+
+  if (!currentUserData) {
+    return null // Or a loading spinner
+  }
+
+  const displayName =
+    currentUserData.firstName && currentUserData.lastName
+      ? `${currentUserData.firstName} ${currentUserData.lastName}`
+      : currentUserData.email.split("@")[0].charAt(0).toUpperCase() + currentUserData.email.split("@")[0].slice(1)
 
   // Generate initials for avatar
-  const initials = displayName
-    .split(" ")
-    .map((name) => name.charAt(0))
-    .join("")
-    .toUpperCase()
-    .slice(0, 2)
+  const initials = (currentUserData.firstName?.charAt(0) || "") + (currentUserData.lastName?.charAt(0) || "")
+  const fallbackInitials = initials.length > 0 ? initials.toUpperCase() : displayName.charAt(0).toUpperCase()
 
   const handleLogout = () => {
     localStorage.clear()
@@ -37,19 +68,19 @@ export default function UserProfileMenu({ userType, userEmail, userName }: UserP
   }
 
   const handleProfile = () => {
-    alert("Profile page coming soon! 👤")
+    router.push("/profile")
   }
 
   const handleSettings = () => {
-    alert("Settings page coming soon! ⚙️")
+    router.push("/settings")
   }
 
   const handleSupport = () => {
-    alert("Support page coming soon! 🆘")
+    router.push("/support")
   }
 
   const getUserTypeColor = () => {
-    switch (userType) {
+    switch (currentUserData.userType) {
       case "student":
         return "from-blue-500 to-cyan-500"
       case "teacher":
@@ -62,7 +93,7 @@ export default function UserProfileMenu({ userType, userEmail, userName }: UserP
   }
 
   const getUserTypeBadge = () => {
-    switch (userType) {
+    switch (currentUserData.userType) {
       case "student":
         return "bg-blue-500/20 text-blue-400"
       case "teacher":
@@ -82,14 +113,17 @@ export default function UserProfileMenu({ userType, userEmail, userName }: UserP
           className="flex items-center gap-3 p-2 h-auto hover:bg-white/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 rounded-lg"
         >
           <Avatar className="w-10 h-10 border-2 border-white/20">
-            <AvatarImage src="/placeholder.svg?height=40&width=40" alt={displayName} />
+            <AvatarImage
+              src={currentUserData.avatarUrl || "/placeholder.svg?height=40&width=40&query=user profile"}
+              alt={displayName}
+            />
             <AvatarFallback className={`bg-gradient-to-br ${getUserTypeColor()} text-white font-semibold`}>
-              {initials}
+              {fallbackInitials}
             </AvatarFallback>
           </Avatar>
           <div className="hidden md:flex flex-col items-start">
             <span className="text-white font-medium text-sm">{displayName}</span>
-            <span className="text-gray-400 text-xs">{userEmail}</span>
+            <span className="text-gray-400 text-xs">{currentUserData.email}</span>
           </div>
           <ChevronDown className="w-4 h-4 text-gray-400 hidden md:block" />
         </Button>
@@ -104,18 +138,21 @@ export default function UserProfileMenu({ userType, userEmail, userName }: UserP
         <div className="p-4 border-b border-gray-700/50">
           <div className="flex items-center gap-4">
             <Avatar className="w-16 h-16 border-2 border-white/20">
-              <AvatarImage src="/placeholder.svg?height=64&width=64" alt={displayName} />
+              <AvatarImage
+                src={currentUserData.avatarUrl || "/placeholder.svg?height=64&width=64&query=user profile"}
+                alt={displayName}
+              />
               <AvatarFallback className={`bg-gradient-to-br ${getUserTypeColor()} text-white font-bold text-lg`}>
-                {initials}
+                {fallbackInitials}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
               <h3 className="text-white font-semibold text-lg">{displayName}</h3>
-              <p className="text-gray-400 text-sm mb-2">{userEmail}</p>
+              <p className="text-gray-400 text-sm mb-2">{currentUserData.email}</p>
               <span
                 className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getUserTypeBadge()}`}
               >
-                {userType.charAt(0).toUpperCase() + userType.slice(1)}
+                {currentUserData.userType.charAt(0).toUpperCase() + currentUserData.userType.slice(1)}
               </span>
             </div>
           </div>

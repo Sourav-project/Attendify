@@ -36,10 +36,22 @@ export default function StudentRegister() {
 
     setIsLoading(true)
 
-    // Simulate registration
+    // Simulate registration and securely save data
     setTimeout(() => {
+      const userData = {
+        userType: "student",
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        studentId: formData.studentId,
+        class: formData.class,
+        section: formData.section,
+        // In a real app, password would be hashed and stored securely on a backend
+      }
       localStorage.setItem("userType", "student")
       localStorage.setItem("userEmail", formData.email)
+      localStorage.setItem("authToken", `token_student_${Date.now()}`)
+      localStorage.setItem("currentUser", JSON.stringify(userData)) // Store comprehensive user data
       router.push("/dashboard")
       setIsLoading(false)
     }, 1500)
